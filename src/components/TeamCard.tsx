@@ -1,0 +1,40 @@
+import React from 'react';
+import { motion } from 'motion/react';
+import { Pastor } from '../lib/types';
+
+interface TeamCardProps {
+  pastor: Pastor;
+  index: number;
+  key?: string | number;
+}
+
+export default function TeamCard({ pastor, index }: TeamCardProps) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.1 }}
+      className="group bg-white p-6 rounded-[2.5rem] border border-pap-earth/10 shadow-sm hover:shadow-xl transition-all"
+    >
+      <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden mb-8 shadow-md">
+        <img 
+          src={pastor.image} 
+          alt={pastor.name}
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+          referrerPolicy="no-referrer"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-pap-primary/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-8">
+          <p className="text-white text-base italic leading-relaxed font-light">
+            "{pastor.shortBio}"
+          </p>
+        </div>
+      </div>
+      <div className="px-2 pb-4">
+        <h3 className="text-3xl font-serif font-bold text-pap-primary mb-1">{pastor.name}</h3>
+        <div className="w-12 h-1 bg-pap-sand mb-3" />
+        <p className="text-pap-earth font-bold uppercase tracking-widest text-xs">{pastor.role}</p>
+      </div>
+    </motion.div>
+  );
+}
