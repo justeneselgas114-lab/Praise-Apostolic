@@ -9,6 +9,8 @@ interface TeamCardProps {
 }
 
 export default function TeamCard({ pastor, index }: TeamCardProps) {
+  const imageUrl = pastor.image || 'https://via.placeholder.com/400x500?text=No+Image';
+  
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -19,10 +21,14 @@ export default function TeamCard({ pastor, index }: TeamCardProps) {
     >
       <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden mb-8 shadow-md">
         <img 
-          src={pastor.image} 
+          src={imageUrl} 
           alt={pastor.name}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
           referrerPolicy="no-referrer"
+          onError={(e) => {
+            console.warn(`Failed to load image for pastor: ${pastor.name}`, pastor.image);
+            (e.target as HTMLImageElement).src = 'https://via.placeholder.com/400x500?text=' + encodeURIComponent(pastor.name);
+          }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-pap-primary/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-8">
           <p className="text-white text-base italic leading-relaxed font-light">

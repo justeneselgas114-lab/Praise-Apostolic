@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Church, Edit3 } from 'lucide-react';
+import { Menu, X, Church } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { cn } from '../lib/utils';
-import { useEditMode } from '../contexts/EditModeContext';
 
 const NAV_LINKS = [
   { name: 'Home', path: '/' },
@@ -20,14 +19,46 @@ const NAV_LINKS = [
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [navBlend, setNavBlend] = useState(0); // 0 = light logo, 1 = dark logo
   const location = useLocation();
-  const { isEditMode, toggleEditMode } = useEditMode();
+
+  // Keep the navbar visible (solid background + dark text) on key routes like
+  // the admin login so it doesn't blend into the page background.
+  const forceSolidNav = location.pathname === '/login' || location.pathname === '/admin' || location.pathname.startsWith('/admin/dashboard');
+  const isSolidNav = scrolled || forceSolidNav;
+
+  // For admin dashboard, use dark background
+  const isAdminDashboard = location.pathname.startsWith('/admin/dashboard');
+
+  // Choose a logo that contrasts with the navbar background.
+  // We cross-fade between the light and dark versions for a smooth transition.
+  const logoLight = '/images/logo1.png';
+  const logoDark = '/images/logo2.png';
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+      if (!forceSolidNav) {
+        const blend = Math.min(1, window.scrollY / 150);
+        setNavBlend(blend);
+      }
+    };
+
+    // Set initial state in case the user refreshes while scrolled.
+    handleScroll();
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [forceSolidNav]);
+
+  useEffect(() => {
+    // Force white logo on admin dashboard, dark logo on login/admin pages
+    if (isAdminDashboard) {
+      setNavBlend(0); // White logo for admin dashboard
+    } else if (forceSolidNav) {
+      setNavBlend(1); // Dark logo for login/admin pages
+    }
+  }, [forceSolidNav, isAdminDashboard]);
 
   useEffect(() => {
     setIsOpen(false);
@@ -44,36 +75,54 @@ export default function Navbar() {
     };
   }, [isOpen]);
 
+  
+
   return (
     <>
       <nav className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-500 px-6",
-        scrolled 
-          ? "bg-white/10 backdrop-blur-2xl border-b border-white/10 shadow-sm py-3" 
-          : "bg-transparent py-5"
+        isAdminDashboard
+          ? "bg-pap-primary shadow-lg py-3"
+          : isSolidNav 
+            ? "bg-white/40 backdrop-blur-2xl border-b border-white/20 shadow-sm py-3" 
+            : "bg-transparent py-5"
       )}>
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-16 h-16 flex items-center justify-center transition-all duration-500 overflow-hidden">
-              <img 
-                src="/images/logo.png" 
+          <Link to="/" className="flex items-center gap-3 group flex-shrink-0">
+            <div className="relative w-16 h-16 flex items-center justify-center transition-all duration-500 overflow-hidden flex-shrink-0">
+              <img
+                src={logoLight}
                 alt="PAP Logo"
-                className="w-full h-full object-contain"
+                className="absolute inset-0 w-full h-full object-contain transition-opacity duration-300"
+                style={{ opacity: 1 - navBlend }}
+                referrerPolicy="no-referrer"
+              />
+              <img
+                src={logoDark}
+                alt="PAP Logo"
+                className="absolute inset-0 w-full h-full object-contain transition-opacity duration-300"
+                style={{ opacity: navBlend }}
                 referrerPolicy="no-referrer"
               />
             </div>
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-8 flex-nowrap">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
                 className={cn(
                   "text-xs uppercase tracking-widest font-bold transition-all relative group py-1",
-                  scrolled ? "text-pap-primary/80" : "text-white/80",
-                  location.pathname === link.path && (scrolled ? "text-pap-primary" : "text-white")
+                  isAdminDashboard
+                    ? "text-white/80"
+                    : isSolidNav 
+                      ? "text-pap-primary/80" 
+                      : "text-white/80",
+                  isAdminDashboard && location.pathname === link.path 
+                    ? "text-white"
+                    : location.pathname === link.path && (isSolidNav ? "text-pap-primary" : "text-white")
                 )}
               >
                 {link.name}
@@ -84,37 +133,25 @@ export default function Navbar() {
               </Link>
             ))}
             
-            {/* Edit Mode Toggle */}
-            <div className="flex items-center gap-2">
-              <Edit3 size={16} className={cn(
-                "transition-colors",
-                scrolled ? "text-pap-primary/60" : "text-white/60"
-              )} />
-              <button
-                onClick={toggleEditMode}
-                className={`relative inline-flex h-5 w-10 items-center rounded-full transition-colors ${
-                  isEditMode ? 'bg-pap-sand' : 'bg-gray-300'
-                }`}
-              >
-                <span
-                  className={`inline-block h-4 w-4 transform rounded-full bg-white shadow-lg transition-transform ${
-                    isEditMode ? 'translate-x-5' : 'translate-x-0.5'
-                  }`}
-                />
-              </button>
-            </div>
+            {/* (Edit toggle removed) */}
             
-            <Link
-              to="/connect"
-              className={cn(
-                "px-6 py-2.5 rounded-full text-xs uppercase tracking-widest font-bold transition-all shadow-sm hover:shadow-md active:scale-95",
-                scrolled 
-                  ? "bg-pap-primary text-white hover:bg-pap-primary/90" 
-                  : "bg-pap-sand text-white hover:bg-pap-sand/90"
-              )}
-            >
-              Plan Your Visit
-            </Link>
+            { !location.pathname.startsWith('/admin/dashboard') && (
+              <Link
+                to="/connect"
+                className={cn(
+                  "px-6 py-2.5 rounded-full text-xs uppercase tracking-widest font-bold transition-all shadow-sm hover:shadow-md active:scale-95",
+                  isAdminDashboard
+                    ? "bg-white text-pap-primary hover:bg-white/90"
+                    : isSolidNav 
+                      ? "bg-pap-primary text-white hover:bg-pap-primary/90" 
+                      : "bg-pap-sand text-white hover:bg-pap-sand/90"
+                )}
+                // prevent button text from wrapping
+                style={{ whiteSpace: 'nowrap' }}
+              >
+                Plan Your Visit
+              </Link>
+            )}
           </div>
 
           {/* Mobile Toggle */}
@@ -126,17 +163,29 @@ export default function Navbar() {
             <div className="w-6 h-5 flex flex-col justify-between relative">
               <span className={cn(
                 "w-full h-0.5 transition-all duration-300 rounded-full",
-                (scrolled || isOpen) ? "bg-pap-primary" : "bg-white",
+                isAdminDashboard 
+                  ? "bg-white" 
+                  : (isSolidNav || isOpen) 
+                    ? "bg-pap-primary" 
+                    : "bg-white",
                 isOpen ? "rotate-45 translate-y-2" : ""
               )} />
               <span className={cn(
                 "w-full h-0.5 transition-all duration-300 rounded-full",
-                (scrolled || isOpen) ? "bg-pap-primary" : "bg-white",
+                isAdminDashboard 
+                  ? "bg-white" 
+                  : (isSolidNav || isOpen) 
+                    ? "bg-pap-primary" 
+                    : "bg-white",
                 isOpen ? "opacity-0 translate-x-2" : ""
               )} />
               <span className={cn(
                 "w-full h-0.5 transition-all duration-300 rounded-full",
-                (scrolled || isOpen) ? "bg-pap-primary" : "bg-white",
+                isAdminDashboard 
+                  ? "bg-white" 
+                  : (isSolidNav || isOpen) 
+                    ? "bg-pap-primary" 
+                    : "bg-white",
                 isOpen ? "-rotate-45 -translate-y-2.5" : ""
               )} />
             </div>
@@ -203,43 +252,23 @@ export default function Navbar() {
                 </div>
 
                 <div className="mt-auto p-6 bg-gradient-to-t from-pap-primary/10 to-pap-primary/5 space-y-6">
-                  {/* Edit Mode Toggle - Mobile */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4 }}
-                    className="flex items-center justify-between p-3 bg-white/50 rounded-lg backdrop-blur-sm"
-                  >
-                    <div className="flex items-center gap-2">
-                      <Edit3 size={16} className="text-pap-primary/60" />
-                      <span className="text-xs uppercase tracking-widest font-bold text-pap-primary/60">Edit Mode</span>
-                    </div>
-                    <button
-                      onClick={toggleEditMode}
-                      className={`relative inline-flex h-5 w-10 items-center rounded-full transition-colors ${
-                        isEditMode ? 'bg-pap-sand' : 'bg-gray-300'
-                      }`}
-                    >
-                      <span
-                        className={`inline-block h-4 w-4 transform rounded-full bg-white shadow-lg transition-transform ${
-                          isEditMode ? 'translate-x-5' : 'translate-x-0.5'
-                        }`}
-                      />
-                    </button>
-                  </motion.div>
+                  {/* Admin Login Toggle - Mobile */}
+                  {/* (Edit toggle removed) */}
                   
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5 }}
-                  >
-                    <Link
-                      to="/connect"
-                      className="block w-full bg-pap-primary text-white text-center py-4 rounded-xl font-bold text-base shadow-lg active:scale-95 transition-transform hover:bg-pap-primary/90"
+                  { !location.pathname.startsWith('/admin/dashboard') && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.5 }}
                     >
-                      Plan Your Visit
-                    </Link>
-                  </motion.div>
+                      <Link
+                        to="/connect"
+                        className="block w-full bg-pap-primary text-white text-center py-4 rounded-xl font-bold text-base shadow-lg active:scale-95 transition-transform hover:bg-pap-primary/90"
+                      >
+                        Plan Your Visit
+                      </Link>
+                    </motion.div>
+                  )}
                   
                   <motion.div 
                     className="space-y-4 p-4 bg-white/30 rounded-lg backdrop-blur-sm"
@@ -267,6 +296,8 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      
     </>
   );
 }

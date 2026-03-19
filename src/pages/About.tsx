@@ -1,12 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
-import { PASTORS } from '../lib/data';
+import { pastorsAPI } from '../lib/api';
 import TeamCard from '../components/TeamCard';
 import { History, Target, Eye } from 'lucide-react';
 import ParallaxSection from '../components/ParallaxSection';
+import { Pastor } from '../lib/types';
 
 export default function About() {
+  const [pastors, setPastors] = useState<Pastor[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    setLoading(true);
+    setError(null);
+
+    pastorsAPI
+      .getAll()
+      .then((data) => {
+        console.log('Pastors loaded:', data);
+        setPastors(data ?? []);
+      })
+      .catch((err) => {
+        console.error('Error loading pastors:', err);
+        setError(err?.message || 'Unable to load pastors');
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -125,9 +147,17 @@ export default function About() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16">
-            {PASTORS.map((pastor, idx) => (
-              <TeamCard key={pastor.id} pastor={pastor} index={idx} />
-            ))}
+            {loading ? (
+              <p className="col-span-3 text-center text-pap-primary/70">Loading team…</p>
+            ) : error ? (
+              <p className="col-span-3 text-center text-red-600">{error}</p>
+            ) : pastors.length === 0 ? (
+              <p className="col-span-3 text-center text-pap-primary/70">No team members available.</p>
+            ) : (
+              pastors.map((pastor, idx) => (
+                <TeamCard key={pastor.id} pastor={pastor} index={idx} />
+              ))
+            )}
           </div>
 
           <div className="mt-32 text-center">

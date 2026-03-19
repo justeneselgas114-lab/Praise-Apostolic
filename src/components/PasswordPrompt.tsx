@@ -2,9 +2,11 @@ import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Lock, AlertCircle } from 'lucide-react';
 import { useEditMode } from '../contexts/EditModeContext';
+import { useNavigate } from 'react-router-dom';
 
 export default function PasswordPrompt() {
   const { showPasswordPrompt, verifyPassword, cancelPasswordPrompt } = useEditMode();
+  const navigate = useNavigate();
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
@@ -23,15 +25,17 @@ export default function PasswordPrompt() {
       setError('Please enter a password');
       return;
     }
-
-    const isValid = verifyPassword(password);
-    if (!isValid) {
-      setError('Incorrect password. Please try again.');
+    // Redirect to admin login page for proper authentication
+    // The old password prompt remains as a fallback for dev.
+    if (verifyPassword(password)) {
+      // legacy local password worked - do nothing else
       setPassword('');
-      if (inputRef.current) {
-        inputRef.current.focus();
-      }
+      setError('');
+      return;
     }
+    // Otherwise open the Admin login page
+    navigate('/admin');
+    cancelPasswordPrompt();
   };
 
   const handleCancel = () => {

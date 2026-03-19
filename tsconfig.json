@@ -22,5 +22,9 @@
     },
     "allowImportingTsExtensions": true,
     "noEmit": true
-  }
+  },
+  "exclude": [
+    "backend/**/*.spec.ts",
+    "backend/test/**/*.ts"
+  ]
 }

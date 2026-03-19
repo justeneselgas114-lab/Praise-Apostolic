@@ -1,10 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { MINISTRIES } from '../lib/data';
 import MinistryCard from '../components/MinistryCard';
 import ParallaxSection from '../components/ParallaxSection';
+import { ministriesAPI } from '../lib/api';
+import { Ministry } from '../lib/types';
 
 export default function Ministries() {
+  const [ministries, setMinistries] = useState<Ministry[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    setLoading(true);
+    setError(null);
+
+    ministriesAPI
+      .getAll()
+      .then((data) => setMinistries(data ?? []))
+      .catch((err) => setError(err?.message || 'Unable to load ministries'))
+      .finally(() => setLoading(false));
+  }, []);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -26,9 +42,17 @@ export default function Ministries() {
 
       <section className="section-padding bg-pap-light">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {MINISTRIES.map((ministry, idx) => (
-            <MinistryCard key={ministry.id} ministry={ministry} index={idx} />
-          ))}
+          {loading ? (
+            <p className="col-span-3 text-center text-pap-primary/70">Loading ministries…</p>
+          ) : error ? (
+            <p className="col-span-3 text-center text-red-600">{error}</p>
+          ) : ministries.length === 0 ? (
+            <p className="col-span-3 text-center text-pap-primary/70">No ministries found at this time.</p>
+          ) : (
+            ministries.map((ministry, idx) => (
+              <MinistryCard key={ministry.id} ministry={ministry} index={idx} />
+            ))
+          )}
         </div>
       </section>
 

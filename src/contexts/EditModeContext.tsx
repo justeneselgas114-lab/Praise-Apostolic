@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
 interface EditModeContextType {
   isEditMode: boolean;
@@ -9,6 +9,8 @@ interface EditModeContextType {
   verifyPassword: (password: string) => boolean;
   cancelPasswordPrompt: () => void;
   hideTurnOffNotification: () => void;
+  loginWithToken: (token: string) => void;
+  logout: () => void;
 }
 
 const EditModeContext = createContext<EditModeContextType | undefined>(undefined);
@@ -26,11 +28,17 @@ interface EditModeProviderProps {
 }
 
 export function EditModeProvider({ children }: EditModeProviderProps) {
-  const [isEditMode, setIsEditMode] = useState(false);
+  const [isEditMode, setIsEditMode] = useState<boolean>(() => {
+    try {
+      return Boolean(localStorage.getItem('pap_admin_token'));
+    } catch {
+      return false;
+    }
+  });
   const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
   const [showTurnOffNotification, setShowTurnOffNotification] = useState(false);
   
-  // Default password - in production, this should be stored securely
+  // Default password fallback (dev only) - replace with real auth
   const ADMIN_PASSWORD = 'papadmin123';
 
   const toggleEditMode = () => {
@@ -44,7 +52,7 @@ export function EditModeProvider({ children }: EditModeProviderProps) {
         setShowTurnOffNotification(false);
       }, 3000);
     } else {
-      // If enabling edit mode, show password prompt
+      // If enabling edit mode, prompt user to sign in via Admin Login
       setShowPasswordPrompt(true);
     }
   };
@@ -54,7 +62,13 @@ export function EditModeProvider({ children }: EditModeProviderProps) {
   };
 
   const verifyPassword = (password: string): boolean => {
+    // Legacy local-password fallback (dev). Prefer token-based login.
     if (password === ADMIN_PASSWORD) {
+      try {
+        localStorage.setItem('pap_admin_token', 'dev-token');
+      } catch {
+        // ignore
+      }
       setIsEditMode(true);
       setShowPasswordPrompt(false);
       return true;
@@ -70,6 +84,32 @@ export function EditModeProvider({ children }: EditModeProviderProps) {
     setShowTurnOffNotification(false);
   };
 
+  const loginWithToken = (token: string) => {
+    try {
+      localStorage.setItem('pap_admin_token', token);
+    } catch {}
+    setIsEditMode(true);
+    setShowPasswordPrompt(false);
+  };
+
+  const logout = () => {
+    try {
+      localStorage.removeItem('pap_admin_token');
+    } catch {}
+    setIsEditMode(false);
+  };
+
+  // Keep in sync with storage changes (another tab or manual removal)
+  useEffect(() => {
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === 'pap_admin_token') {
+        setIsEditMode(Boolean(e.newValue));
+      }
+    };
+    window.addEventListener('storage', onStorage);
+    return () => window.removeEventListener('storage', onStorage);
+  }, []);
+
   const value: EditModeContextType = {
     isEditMode,
     showPasswordPrompt,
@@ -79,6 +119,8 @@ export function EditModeProvider({ children }: EditModeProviderProps) {
     verifyPassword,
     cancelPasswordPrompt,
     hideTurnOffNotification
+    ,loginWithToken,
+    logout
   };
 
   return (

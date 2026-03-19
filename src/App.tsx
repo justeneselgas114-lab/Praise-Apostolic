@@ -17,6 +17,14 @@ import Events from './pages/Events';
 import Sermons from './pages/Sermons';
 import Gallery from './pages/Gallery';
 import GalleryFolderView from './pages/GalleryFolderView';
+import AdminLogin from './pages/AdminLogin';
+import AdminDashboard from './pages/AdminDashboard';
+import AdminMinistries from './pages/AdminMinistries';
+import AdminEvents from './pages/AdminEvents';
+import AdminSermons from './pages/AdminSermons';
+import AdminPastors from './pages/AdminPastors';
+import AdminGallery from './pages/AdminGallery';
+import AdminUsers from './pages/AdminUsers';
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -41,6 +49,15 @@ function AnimatedRoutes() {
           <Route path="/gallery/:folderId" element={<GalleryFolderView />} />
           <Route path="/give" element={<Give />} />
           <Route path="/connect" element={<Connect />} />
+          <Route path="/login" element={<AdminLogin />} />
+          <Route path="/admin" element={<AdminLogin />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/ministries" element={<AdminMinistries />} />
+          <Route path="/admin/events" element={<AdminEvents />} />
+          <Route path="/admin/sermons" element={<AdminSermons />} />
+          <Route path="/admin/pastors" element={<AdminPastors />} />
+          <Route path="/admin/gallery" element={<AdminGallery />} />
+          <Route path="/admin/users" element={<AdminUsers />} />
         </Routes>
       </motion.div>
     </AnimatePresence>
@@ -53,7 +70,7 @@ export default function App() {
       <Router>
         <ScrollToTop />
         <div className="flex flex-col min-h-screen">
-          <Navbar />
+          <NavbarWrapper />
           <main className="flex-grow">
             <AnimatedRoutes />
           </main>
@@ -64,4 +81,8 @@ export default function App() {
       </Router>
     </EditModeProvider>
   );
+}
+
+function NavbarWrapper() {
+  return <Navbar />;
 }
