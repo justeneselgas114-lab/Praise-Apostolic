@@ -42,29 +42,29 @@ export default function Hero() {
           <span className="inline-block px-4 py-1.5 rounded-full bg-pap-sand/20 text-pap-sand text-xs font-bold uppercase tracking-widest mb-6 border border-pap-sand/30">
             Praise Apostolic Pentecostals
           </span>
-          <h1 className="text-2xl sm:text-4xl md:text-8xl text-pap-light font-serif font-bold mb-6 leading-[1.1] tracking-tight">
+          <h1 className="text-4xl sm:text-5xl md:text-8xl text-pap-light font-serif font-bold mb-6 leading-[1.1] tracking-tight">
             Reverent. Calm. <br />
             <span className="italic text-pap-sand">Grounded.</span>
           </h1>
-          <p className="text-sm sm:text-base md:text-xl text-pap-light/80 mb-10 max-w-2xl mx-auto font-light leading-relaxed px-4 sm:px-0">
+          <p className="text-sm sm:text-base md:text-xl text-pap-light/80 mb-10 max-w-2xl mx-au to font-light leading-relaxed px-4 sm:px-0">
             Experience the depth of Apostolic worship and the warmth of a community rooted in heritage and truth.
           </p>
           
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 px-4 sm:px-0">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 px-4 sm:px-0">
             <Link 
               to="/connect"
-              className="w-full sm:w-auto px-10 py-5 bg-pap-sand text-white rounded-full font-bold text-lg hover:bg-pap-sand/90 transition-all flex items-center justify-center gap-2 shadow-xl active:scale-95"
+              className="w-full sm:w-auto px-8 py-3 sm:py-5 sm:px-10 bg-pap-sand text-white rounded-full font-bold text-base sm:text-lg hover:bg-pap-sand/90 transition-all flex items-center justify-center gap-2 shadow-xl active:scale-95"
             >
-              <Calendar size={20} />
+              <Calendar size={18} />
               Plan Your Visit
             </Link>
             <a 
               href="https://youtube.com" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="w-full sm:w-auto px-10 py-5 bg-white/10 backdrop-blur-md border border-white/20 text-white rounded-full font-bold text-lg hover:bg-white/20 transition-all flex items-center justify-center gap-2 shadow-xl active:scale-95"
+              className="w-full sm:w-auto px-8 py-3 sm:py-5 sm:px-10 bg-white/10 backdrop-blur-md border border-white/20 text-white rounded-full font-bold text-base sm:text-lg hover:bg-white/20 transition-all flex items-center justify-center gap-2 shadow-xl active:scale-95"
             >
-              <Play size={20} fill="currentColor" />
+              <Play size={18} fill="currentColor" />
               Stream Live
             </a>
           </div>
