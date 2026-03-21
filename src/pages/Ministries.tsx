@@ -33,8 +33,8 @@ export default function Ministries() {
         overlayClassName="bg-gradient-to-b from-pap-primary/80 to-pap-primary/40"
       >
         <div className="relative z-10 max-w-4xl mx-auto space-y-8 text-center text-white">
-          <h1 className="text-6xl md:text-8xl font-serif font-bold">Departments</h1>
-          <p className="text-xl text-white/60 font-light max-w-2xl mx-auto leading-relaxed">
+          <h1 className="text-3xl sm:text-5xl md:text-8xl font-serif font-bold">Departments</h1>
+          <p className="text-sm sm:text-base md:text-xl text-white/60 font-light max-w-2xl mx-auto leading-relaxed">
             Every member a minister. Find your place in our Apostolic community.
           </p>
         </div>
@@ -62,12 +62,12 @@ export default function Ministries() {
         heightClassName="py-32 px-6"
         overlayClassName="bg-pap-secondary/90"
       >
-        <div className="max-w-6xl mx-auto p-16 md:p-24 rounded-[4rem] text-center space-y-10 relative z-10">
-          <h2 className="text-5xl md:text-7xl font-serif font-bold text-white">Ready to Serve?</h2>
-          <p className="text-xl text-white/70 max-w-2xl mx-auto font-light leading-relaxed">
+        <div className="max-w-6xl mx-auto p-8 md:p-24 rounded-[4rem] text-center space-y-8 md:space-y-10 relative z-10">
+          <h2 className="text-3xl sm:text-5xl md:text-7xl font-serif font-bold text-white">Ready to Serve?</h2>
+          <p className="text-sm sm:text-base md:text-xl text-white/70 max-w-2xl mx-auto font-light leading-relaxed">
             God has given each of us unique gifts to build up the body of Christ. We'd love to help you find your place in our volunteer teams.
           </p>
-          <button className="px-12 py-5 bg-pap-sand text-white rounded-full font-bold text-xl hover:bg-pap-sand/90 transition-all shadow-2xl">
+          <button className="px-8 sm:px-12 py-4 sm:py-5 bg-pap-sand text-white rounded-full font-bold text-sm sm:text-lg md:text-xl hover:bg-pap-sand/90 transition-all shadow-2xl active:scale-95">
             Join a Serving Team
           </button>
         </div>

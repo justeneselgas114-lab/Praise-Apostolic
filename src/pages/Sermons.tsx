@@ -42,8 +42,8 @@ export default function Sermons() {
         overlayClassName="bg-gradient-to-b from-pap-primary/80 to-pap-primary/40"
       >
         <div className="relative z-10 max-w-4xl mx-auto space-y-8 text-center text-white">
-          <h1 className="text-6xl md:text-8xl font-serif font-bold">Sermons</h1>
-          <p className="text-xl text-white/60 font-light max-w-2xl mx-auto leading-relaxed">
+          <h1 className="text-3xl sm:text-5xl md:text-8xl font-serif font-bold">Sermons</h1>
+          <p className="text-sm sm:text-base md:text-xl text-white/60 font-light max-w-2xl mx-auto leading-relaxed">
             Listen to the Word of God and grow in Apostolic truth.
           </p>
         </div>
@@ -53,8 +53,8 @@ export default function Sermons() {
         <div className="max-w-7xl mx-auto space-y-12">
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
             <div className="space-y-4 text-center md:text-left">
-              <h2 className="text-4xl md:text-5xl font-serif font-bold">Audio Messages</h2>
-              <p className="text-white/60 font-light max-w-xl">Download or stream our latest messages for your daily commute or personal study.</p>
+              <h2 className="text-2xl sm:text-3xl md:text-5xl font-serif font-bold">Audio Messages</h2>
+              <p className="text-xs sm:text-sm md:text-base text-white/60 font-light max-w-xl">Download or stream our latest messages for your daily commute or personal study.</p>
             </div>
           </div>
 

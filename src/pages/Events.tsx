@@ -31,8 +31,8 @@ export default function Events() {
         overlayClassName="bg-gradient-to-b from-pap-primary/80 to-pap-primary/40"
       >
         <div className="relative z-10 max-w-4xl mx-auto space-y-8 text-center text-white">
-          <h1 className="text-6xl md:text-8xl font-serif font-bold">Events</h1>
-          <p className="text-xl text-white/60 font-light max-w-2xl mx-auto leading-relaxed">
+          <h1 className="text-3xl sm:text-5xl md:text-8xl font-serif font-bold">Events</h1>
+          <p className="text-sm sm:text-base md:text-xl text-white/60 font-light max-w-2xl mx-auto leading-relaxed">
             Stay updated with our upcoming fellowships and special services.
           </p>
         </div>
@@ -70,8 +70,8 @@ export default function Events() {
                 </div>
                 <div className="flex-1 space-y-6 w-full">
                   <div className="space-y-2">
-                    <h3 className="text-4xl font-serif font-bold text-pap-primary">{event.title}</h3>
-                    <p className="text-pap-primary/60 text-lg font-light leading-relaxed">{event.description}</p>
+                    <h3 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-pap-primary">{event.title}</h3>
+                    <p className="text-xs sm:text-sm md:text-lg text-pap-primary/60 font-light leading-relaxed">{event.description}</p>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-6 border-t border-pap-earth/10">
                     <div className="flex items-center gap-3 text-pap-primary/70">

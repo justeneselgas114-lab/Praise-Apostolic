@@ -42,11 +42,11 @@ export default function Hero() {
           <span className="inline-block px-4 py-1.5 rounded-full bg-pap-sand/20 text-pap-sand text-xs font-bold uppercase tracking-widest mb-6 border border-pap-sand/30">
             Praise Apostolic Pentecostals
           </span>
-          <h1 className="text-4xl sm:text-5xl md:text-8xl text-pap-light font-serif font-bold mb-6 leading-[1.1] tracking-tight">
+          <h1 className="text-2xl sm:text-4xl md:text-8xl text-pap-light font-serif font-bold mb-6 leading-[1.1] tracking-tight">
             Reverent. Calm. <br />
             <span className="italic text-pap-sand">Grounded.</span>
           </h1>
-          <p className="text-base md:text-xl text-pap-light/80 mb-10 max-w-2xl mx-auto font-light leading-relaxed px-4 sm:px-0">
+          <p className="text-sm sm:text-base md:text-xl text-pap-light/80 mb-10 max-w-2xl mx-auto font-light leading-relaxed px-4 sm:px-0">
             Experience the depth of Apostolic worship and the warmth of a community rooted in heritage and truth.
           </p>
           

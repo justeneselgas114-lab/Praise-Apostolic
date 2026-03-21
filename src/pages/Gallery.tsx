@@ -62,8 +62,8 @@ export default function Gallery() {
         overlayClassName="bg-gradient-to-b from-pap-primary/80 to-pap-primary/40"
       >
         <div className="relative z-10 max-w-4xl mx-auto space-y-8 text-center text-white">
-          <h1 className="text-6xl md:text-8xl font-serif font-bold">Photo Gallery</h1>
-          <p className="text-xl text-white/60 font-light max-w-2xl mx-auto leading-relaxed">
+          <h1 className="text-3xl sm:text-5xl md:text-8xl font-serif font-bold">Photo Gallery</h1>
+          <p className="text-sm sm:text-base md:text-xl text-white/60 font-light max-w-2xl mx-auto leading-relaxed">
             Capturing the moments of worship, fellowship, and outreach in our community.
           </p>
         </div>

@@ -18,8 +18,8 @@ export default function Connect() {
         overlayClassName="bg-gradient-to-b from-pap-primary/80 to-pap-primary/40"
       >
         <div className="relative z-10 max-w-4xl mx-auto space-y-8 text-center text-white">
-          <h1 className="text-6xl md:text-8xl font-serif font-bold">Connect</h1>
-          <p className="text-xl text-white/60 font-light max-w-2xl mx-auto leading-relaxed">
+          <h1 className="text-3xl sm:text-5xl md:text-8xl font-serif font-bold">Connect</h1>
+          <p className="text-sm sm:text-base md:text-xl text-white/60 font-light max-w-2xl mx-auto leading-relaxed">
             Whether you're looking for prayer, a Bible study, or just want to say hello, we're here for you.
           </p>
         </div>
@@ -27,50 +27,50 @@ export default function Connect() {
 
       {/* Action Grid */}
       <section className="section-padding bg-pap-light">
-        <div className="text-center mb-20 space-y-4">
-          <span className="text-pap-sand font-bold tracking-widest uppercase text-sm">Next Steps</span>
-          <h2 className="text-5xl font-serif font-bold text-pap-primary">How Can We Help?</h2>
+        <div className="text-center mb-16 sm:mb-20 space-y-3 sm:space-y-4">
+          <span className="text-pap-sand font-bold tracking-widest uppercase text-xs sm:text-sm">Next Steps</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-pap-primary">How Can We Help?</h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10">
           <button 
             onClick={() => setFormType('counseling')}
-            className="bg-white p-8 md:p-12 rounded-[2rem] md:rounded-[2.5rem] text-left hover:border-pap-sand transition-all group border border-pap-earth/5 shadow-sm hover:shadow-xl"
+            className="bg-white p-6 sm:p-8 md:p-12 rounded-[2rem] md:rounded-[2.5rem] text-left hover:border-pap-sand transition-all group border border-pap-earth/5 shadow-sm hover:shadow-xl"
           >
-            <div className="w-14 h-14 md:w-16 md:h-16 bg-pap-sand/10 rounded-2xl flex items-center justify-center text-pap-sand mb-6 md:mb-8 group-hover:scale-110 transition-transform">
-              <MessageSquare size={28} />
+            <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-pap-sand/10 rounded-2xl flex items-center justify-center text-pap-sand mb-4 sm:mb-6 md:mb-8 group-hover:scale-110 transition-transform">
+              <MessageSquare size={24} />
             </div>
-            <h3 className="text-2xl md:text-3xl font-serif font-bold mb-3 md:mb-4 text-pap-primary">Counseling</h3>
-            <p className="text-pap-primary/50 mb-6 md:mb-8 leading-relaxed font-light text-sm md:text-base">Request a session with one of our pastoral counselors.</p>
-            <span className="text-pap-primary font-bold flex items-center gap-2 group-hover:text-pap-sand transition-colors text-sm md:text-base">
+            <h3 className="text-xl sm:text-2xl md:text-3xl font-serif font-bold mb-2 sm:mb-3 md:mb-4 text-pap-primary">Counseling</h3>
+            <p className="text-xs sm:text-sm md:text-base text-pap-primary/50 mb-4 sm:mb-6 md:mb-8 leading-relaxed font-light">Request a session with one of our pastoral counselors.</p>
+            <span className="text-pap-primary font-bold flex items-center gap-2 group-hover:text-pap-sand transition-colors text-xs sm:text-sm md:text-base">
               Request Session <Calendar size={18} />
             </span>
           </button>
 
           <button 
             onClick={() => setFormType('bible-study')}
-            className="bg-white p-8 md:p-12 rounded-[2rem] md:rounded-[2.5rem] text-left hover:border-pap-primary transition-all group border border-pap-earth/5 shadow-sm hover:shadow-xl"
+            className="bg-white p-6 sm:p-8 md:p-12 rounded-[2rem] md:rounded-[2.5rem] text-left hover:border-pap-primary transition-all group border border-pap-earth/5 shadow-sm hover:shadow-xl"
           >
-            <div className="w-14 h-14 md:w-16 md:h-16 bg-pap-primary/10 rounded-2xl flex items-center justify-center text-pap-primary mb-6 md:mb-8 group-hover:scale-110 transition-transform">
-              <BookOpen size={28} />
+            <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-pap-primary/10 rounded-2xl flex items-center justify-center text-pap-primary mb-4 sm:mb-6 md:mb-8 group-hover:scale-110 transition-transform">
+              <BookOpen size={24} />
             </div>
-            <h3 className="text-2xl md:text-3xl font-serif font-bold mb-3 md:mb-4 text-pap-primary">Bible Study</h3>
-            <p className="text-pap-primary/50 mb-6 md:mb-8 leading-relaxed font-light text-sm md:text-base">Join a small group to dive deeper into Apostolic truth.</p>
-            <span className="text-pap-primary font-bold flex items-center gap-2 group-hover:text-pap-sand transition-colors text-sm md:text-base">
+            <h3 className="text-xl sm:text-2xl md:text-3xl font-serif font-bold mb-2 sm:mb-3 md:mb-4 text-pap-primary">Bible Study</h3>
+            <p className="text-xs sm:text-sm md:text-base text-pap-primary/50 mb-4 sm:mb-6 md:mb-8 leading-relaxed font-light">Join a small group to dive deeper into Apostolic truth.</p>
+            <span className="text-pap-primary font-bold flex items-center gap-2 group-hover:text-pap-sand transition-colors text-xs sm:text-sm md:text-base">
               Find a Group <Calendar size={18} />
             </span>
           </button>
 
           <button 
             onClick={() => setFormType('visit')}
-            className="bg-white p-8 md:p-12 rounded-[2rem] md:rounded-[2.5rem] text-left hover:border-pap-earth transition-all group border border-pap-earth/5 shadow-sm hover:shadow-xl"
+            className="bg-white p-6 sm:p-8 md:p-12 rounded-[2rem] md:rounded-[2.5rem] text-left hover:border-pap-earth transition-all group border border-pap-earth/5 shadow-sm hover:shadow-xl"
           >
-            <div className="w-14 h-14 md:w-16 md:h-16 bg-pap-earth/10 rounded-2xl flex items-center justify-center text-pap-earth mb-6 md:mb-8 group-hover:scale-110 transition-transform">
-              <MapPin size={28} />
+            <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-pap-earth/10 rounded-2xl flex items-center justify-center text-pap-earth mb-4 sm:mb-6 md:mb-8 group-hover:scale-110 transition-transform">
+              <MapPin size={24} />
             </div>
-            <h3 className="text-2xl md:text-3xl font-serif font-bold mb-3 md:mb-4 text-pap-primary">Church Visit</h3>
-            <p className="text-pap-primary/50 mb-6 md:mb-8 leading-relaxed font-light text-sm md:text-base">Let us know you're coming so we can welcome you.</p>
-            <span className="text-pap-primary font-bold flex items-center gap-2 group-hover:text-pap-sand transition-colors text-sm md:text-base">
+            <h3 className="text-xl sm:text-2xl md:text-3xl font-serif font-bold mb-2 sm:mb-3 md:mb-4 text-pap-primary">Church Visit</h3>
+            <p className="text-xs sm:text-sm md:text-base text-pap-primary/50 mb-4 sm:mb-6 md:mb-8 leading-relaxed font-light">Let us know you're coming so we can welcome you.</p>
+            <span className="text-pap-primary font-bold flex items-center gap-2 group-hover:text-pap-sand transition-colors text-xs sm:text-sm md:text-base">
               Plan Visit <Calendar size={18} />
             </span>
           </button>
