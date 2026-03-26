@@ -25,6 +25,7 @@ import AdminSermons from './pages/AdminSermons';
 import AdminPastors from './pages/AdminPastors';
 import AdminGallery from './pages/AdminGallery';
 import AdminUsers from './pages/AdminUsers';
+import NotFound from './pages/NotFound';
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -58,6 +59,7 @@ function AnimatedRoutes() {
           <Route path="/admin/pastors" element={<AdminPastors />} />
           <Route path="/admin/gallery" element={<AdminGallery />} />
           <Route path="/admin/users" element={<AdminUsers />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </motion.div>
     </AnimatePresence>
@@ -70,8 +72,9 @@ export default function App() {
       <Router>
         <ScrollToTop />
         <div className="flex flex-col min-h-screen">
+          <a href="#main-content" className="skip-to-content">Skip to content</a>
           <NavbarWrapper />
-          <main className="flex-grow">
+          <main id="main-content" className="flex-grow">
             <AnimatedRoutes />
           </main>
           <Footer />

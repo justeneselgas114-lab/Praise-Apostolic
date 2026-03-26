@@ -38,9 +38,6 @@ export function EditModeProvider({ children }: EditModeProviderProps) {
   const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
   const [showTurnOffNotification, setShowTurnOffNotification] = useState(false);
   
-  // Default password fallback (dev only) - replace with real auth
-  const ADMIN_PASSWORD = 'papadmin123';
-
   const toggleEditMode = () => {
     if (isEditMode) {
       // If already in edit mode, turn it off and show notification
@@ -61,18 +58,9 @@ export function EditModeProvider({ children }: EditModeProviderProps) {
     setIsEditMode(enabled);
   };
 
-  const verifyPassword = (password: string): boolean => {
-    // Legacy local-password fallback (dev). Prefer token-based login.
-    if (password === ADMIN_PASSWORD) {
-      try {
-        localStorage.setItem('pap_admin_token', 'dev-token');
-      } catch {
-        // ignore
-      }
-      setIsEditMode(true);
-      setShowPasswordPrompt(false);
-      return true;
-    }
+  const verifyPassword = (_password: string): boolean => {
+    // Password verification is handled via the backend JWT auth flow.
+    // Use the /admin login page to authenticate.
     return false;
   };
 

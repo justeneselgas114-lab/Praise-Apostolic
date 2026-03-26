@@ -4,8 +4,11 @@ import { sermonsAPI } from '../lib/api';
 import { Play, BookOpen } from 'lucide-react';
 import ParallaxSection from '../components/ParallaxSection';
 import { Sermon } from '../lib/types';
+import { usePageMeta } from '../lib/usePageMeta';
 
 export default function Sermons() {
+  usePageMeta('Sermons', 'Listen to audio messages and watch video sermons from Praise Apostolic Pentecostals.');
+
   const [sermons, setSermons] = useState<Sermon[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -17,11 +20,9 @@ export default function Sermons() {
     sermonsAPI
       .getAll()
       .then((data) => {
-        console.log('Sermons fetched:', data);
         setSermons(data ?? []);
       })
       .catch((err) => {
-        console.error('Error loading sermons:', err);
         setError(err?.message || 'Unable to load sermons');
       })
       .finally(() => setLoading(false));
@@ -31,11 +32,7 @@ export default function Sermons() {
   const videoSermons = sermons.filter((s) => s.youtubeId);
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-    >
+    <div>
       <ParallaxSection 
         image="/images/sermons.jpg"
         heightClassName="pt-48 pb-32 px-6"
@@ -49,22 +46,35 @@ export default function Sermons() {
         </div>
       </ParallaxSection>
 
-      <section className="py-24 px-6 bg-pap-secondary text-white">
-        <div className="max-w-7xl mx-auto space-y-12">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-            <div className="space-y-4 text-center md:text-left">
+      <section className="py-20 md:py-28 px-6 bg-pap-secondary text-white">
+        <div className="max-w-7xl mx-auto space-y-16">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8"
+          >
+            <div className="space-y-4">
               <h2 className="text-2xl sm:text-3xl md:text-5xl font-serif font-bold">Audio Messages</h2>
-              <p className="text-xs sm:text-sm md:text-base text-white/60 font-light max-w-xl">Download or stream our latest messages for your daily commute or personal study.</p>
+              <p className="text-xs sm:text-sm md:text-base text-white/70 font-light max-w-xl">Download or stream our latest messages for your daily commute or personal study.</p>
             </div>
-          </div>
+          </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {loading ? (
-              <p className="text-white/60 col-span-2 text-center">Loading sermons…</p>
+              <div className="col-span-full flex flex-col items-center justify-center py-16 gap-4">
+                <div className="pap-spinner" style={{ borderColor: 'rgba(255,255,255,0.3)', borderTopColor: 'transparent' }} />
+                <p className="text-white/60 font-light">Loading sermons...</p>
+              </div>
             ) : error ? (
-              <p className="text-white/60 col-span-2 text-center">{error}</p>
+              <div className="col-span-full flex flex-col items-center justify-center py-16 gap-4">
+                <p className="text-red-300 font-medium">{error}</p>
+                <button onClick={() => window.location.reload()} className="px-6 py-2 bg-pap-sand text-white rounded-full font-semibold hover:bg-pap-sand/90 transition-all text-sm">
+                  Try Again
+                </button>
+              </div>
             ) : audioSermons.length === 0 ? (
-              <p className="text-white/60 col-span-2 text-center">No audio sermons available.</p>
+              <p className="text-white/60 col-span-full text-center py-16 font-light">No audio sermons available.</p>
             ) : (
               audioSermons.map((s, idx) => (
                 <motion.div
@@ -72,29 +82,34 @@ export default function Sermons() {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: idx * 0.1 }}
-                  className="bg-white/5 border border-white/10 rounded-3xl overflow-hidden flex flex-col group hover:bg-white/10 transition-all"
+                  transition={{ delay: Math.min(idx * 0.1, 0.4) }}
+                  whileHover={{ y: -8 }}
+                  className="bg-gradient-to-br from-white/10 to-white/5 border border-white/20 rounded-[2rem] overflow-hidden flex flex-col group hover:border-white/40 hover:from-white/15 transition-all duration-300 shadow-lg hover:shadow-2xl"
                 >
                   {s.thumbnail && (
-                    <div className="relative aspect-video overflow-hidden">
+                    <div className="relative aspect-video overflow-hidden bg-pap-primary/20">
                       <img
                         src={s.thumbnail}
                         alt={s.title}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                         referrerPolicy="no-referrer"
+                        loading="lazy"
                       />
-                      <div className="absolute inset-0 bg-pap-primary/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                        <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-xl flex items-center justify-center border border-white/30">
+                      <div className="absolute inset-0 bg-gradient-to-t from-pap-primary/60 to-transparent flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <motion.div 
+                          whileHover={{ scale: 1.1 }}
+                          className="w-16 h-16 rounded-full bg-white/30 backdrop-blur-xl flex items-center justify-center border border-white/40"
+                        >
                           <Play size={24} className="text-white fill-white ml-1" />
-                        </div>
+                        </motion.div>
                       </div>
                     </div>
                   )}
                   <div className="p-6 space-y-4 flex flex-col flex-grow">
                     <div className="space-y-2">
-                      <h4 className="font-bold text-xl text-white">{s.title}</h4>
+                      <h4 className="font-bold text-lg md:text-xl text-white group-hover:text-pap-sand transition-colors">{s.title}</h4>
                       {s.preacher && (
-                        <p className="text-white/70 text-sm">by {s.preacher}</p>
+                        <p className="text-white/70 text-sm font-medium">{s.preacher}</p>
                       )}
                       {s.scripture && (
                         <p className="text-white/50 text-sm italic">{s.scripture}</p>
@@ -103,8 +118,8 @@ export default function Sermons() {
                     {s.description && (
                       <p className="text-white/60 text-sm leading-relaxed flex-grow">{s.description}</p>
                     )}
-                    <div className="w-full mt-auto">
-                      <audio controls src={s.audioUrl} className="w-full h-10" />
+                    <div className="w-full mt-auto pt-4 border-t border-white/10">
+                      <audio controls src={s.audioUrl} className="w-full h-10 sm:h-12 rounded-lg accent-pap-sand" />
                     </div>
                   </div>
                 </motion.div>
@@ -118,15 +133,23 @@ export default function Sermons() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20 space-y-4">
             <span className="text-pap-sand font-bold tracking-widest uppercase text-sm">Video Archive</span>
-            <h2 className="text-5xl font-serif font-bold text-pap-primary">Latest Video Sermons</h2>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-pap-primary">Latest Video Sermons</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {loading ? (
-              <p className="text-pap-primary/70 col-span-2 text-center">Loading sermons…</p>
+              <div className="col-span-full flex flex-col items-center justify-center py-16 gap-4">
+                <div className="pap-spinner" />
+                <p className="text-pap-primary/60 font-light">Loading sermons...</p>
+              </div>
             ) : error ? (
-              <p className="text-red-600 col-span-2 text-center">{error}</p>
+              <div className="col-span-full flex flex-col items-center justify-center py-16 gap-4">
+                <p className="text-red-600 font-medium">{error}</p>
+                <button onClick={() => window.location.reload()} className="px-6 py-2 bg-pap-sand text-white rounded-full font-semibold hover:bg-pap-sand/90 transition-all text-sm">
+                  Try Again
+                </button>
+              </div>
             ) : videoSermons.length === 0 ? (
-              <p className="text-pap-primary/70 col-span-2 text-center">No video sermons available.</p>
+              <p className="text-pap-primary/60 col-span-full text-center py-16 font-light">No video sermons available.</p>
             ) : (
               videoSermons.map((sermon, idx) => (
                 <motion.div
@@ -134,7 +157,7 @@ export default function Sermons() {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: idx * 0.1 }}
+                  transition={{ delay: Math.min(idx * 0.1, 0.4) }}
                   className="bg-white rounded-[3rem] overflow-hidden shadow-sm border border-pap-earth/5 hover:shadow-2xl transition-all group"
                 >
                   <div className="relative aspect-video overflow-hidden">
@@ -143,6 +166,7 @@ export default function Sermons() {
                       alt={sermon.title}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                       referrerPolicy="no-referrer"
+                      loading="lazy"
                     />
                     <div className="absolute inset-0 bg-pap-primary/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                       <div className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-xl flex items-center justify-center border border-white/30">
@@ -150,9 +174,9 @@ export default function Sermons() {
                       </div>
                     </div>
                   </div>
-                  <div className="p-12 space-y-6">
+                  <div className="p-6 sm:p-8 md:p-12 space-y-4 sm:space-y-6">
                     <div className="space-y-2">
-                      <h3 className="text-3xl font-serif font-bold text-pap-primary">{sermon.title}</h3>
+                      <h3 className="text-xl sm:text-2xl md:text-3xl font-serif font-bold text-pap-primary">{sermon.title}</h3>
                       <div className="flex flex-wrap gap-6 text-pap-primary/50 font-light">
                         <div className="flex items-center gap-2">
                           <BookOpen size={18} className="text-pap-sand" />
@@ -179,6 +203,6 @@ export default function Sermons() {
           </div>
         </div>
       </section>
-    </motion.div>
+    </div>
   );
 }

@@ -20,7 +20,8 @@ export default function MinistryCard({ ministry, index }: MinistryCardProps) {
       viewport={{ once: true }}
       transition={{ delay: index * 0.1 }}
       whileHover={{ y: -10 }}
-      className="bg-pap-light p-8 md:p-10 rounded-[2rem] shadow-sm hover:shadow-xl transition-all group border-l-8 border-pap-sand"
+      whileTap={{ scale: 0.98 }}
+      className="bg-pap-light p-6 sm:p-8 md:p-10 rounded-[2rem] shadow-sm hover:shadow-xl active:shadow-lg transition-shadow group border-l-8 border-pap-sand"
     >
       <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-pap-primary/5 flex items-center justify-center mb-6 md:mb-8 group-hover:bg-pap-sand/10 transition-colors">
         <IconComponent className="text-pap-primary group-hover:text-pap-sand transition-colors" size={28} />

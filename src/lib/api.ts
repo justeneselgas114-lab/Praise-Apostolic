@@ -1,5 +1,16 @@
 // API Configuration for NestJS Backend
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
+// Automatically detect backend URL based on current location
+const getBackendUrl = () => {
+  const isDev = process.env.NODE_ENV === 'development';
+  if (isDev) {
+    // In development, backend is on 3001, frontend can be on any port
+    return 'http://localhost:3001/api';
+  }
+  // In production, use same domain
+  return `${window.location.origin.replace(/:\d+$/, ':3001')}/api`;
+};
+
+const API_BASE_URL = process.env.REACT_APP_API_URL || getBackendUrl();
 
 // Utility to always include the auth token
 function getAuthHeader() {
@@ -33,7 +44,9 @@ export async function apiCall<T>(
 
     return (result as any).data ?? result;
   } catch (error) {
-    console.error('API Call Error:', error);
+    if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
+      throw new Error('Unable to connect to server. Please try again later.');
+    }
     throw error;
   }
 }

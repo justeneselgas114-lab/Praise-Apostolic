@@ -42,11 +42,12 @@ export default function ParallaxSection({
         style={{ y, scale }} 
         className="absolute inset-0 z-0 h-[150%] -top-[25%]"
       >
-        <img 
-          src={image} 
-          alt="" 
+        <img
+          src={image}
+          alt=""
           className="w-full h-full object-cover"
           referrerPolicy="no-referrer"
+          loading="lazy"
         />
         <div className={cn("absolute inset-0", overlayClassName)} />
       </motion.div>

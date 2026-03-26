@@ -78,11 +78,9 @@ export default function AdminSermons({ embed }: { embed?: boolean } = {}) {
     setUploadingAudio(true);
     try {
       const response = await uploadFile(file);
-      console.log('Audio upload response:', response);
       const url = response.url || response;
       setForm((prev) => ({ ...prev, audioUrl: url }));
     } catch (err: any) {
-      console.error('Audio upload error:', err);
       setError(err?.message || 'Audio upload failed');
     } finally {
       setUploadingAudio(false);
@@ -93,11 +91,9 @@ export default function AdminSermons({ embed }: { embed?: boolean } = {}) {
     setUploadingThumbnail(true);
     try {
       const response = await uploadFile(file);
-      console.log('Thumbnail upload response:', response);
       const url = response.url || response;
       setForm((prev) => ({ ...prev, thumbnail: url }));
     } catch (err: any) {
-      console.error('Thumbnail upload error:', err);
       setError(err?.message || 'Thumbnail upload failed');
     } finally {
       setUploadingThumbnail(false);

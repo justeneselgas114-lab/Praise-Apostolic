@@ -79,17 +79,17 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-500 px-6",
+      <nav aria-label="Main navigation" className={cn(
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-500 px-4 sm:px-6",
         isAdminDashboard
-          ? "bg-pap-primary shadow-lg py-3"
+          ? "bg-pap-primary shadow-lg py-2 sm:py-3"
           : isSolidNav 
-            ? "bg-white/40 backdrop-blur-2xl border-b border-white/20 shadow-sm py-3" 
-            : "bg-transparent py-5"
+            ? "bg-white/40 backdrop-blur-2xl border-b border-white/20 shadow-sm py-2 sm:py-3" 
+            : "bg-transparent py-3 sm:py-5"
       )}>
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3 group flex-shrink-0">
-            <div className="relative w-16 h-16 flex items-center justify-center transition-all duration-500 overflow-hidden flex-shrink-0">
+            <div className="relative w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center transition-all duration-500 overflow-hidden flex-shrink-0">
               <img
                 src={logoLight}
                 alt="PAP Logo"
@@ -155,12 +155,12 @@ export default function Navbar() {
           </div>
 
           {/* Mobile Toggle */}
-          <button 
-            className="md:hidden p-2 relative z-50 focus:outline-none group"
+          <button
+            className="md:hidden p-3 min-w-[44px] min-h-[44px] relative z-50 focus:outline-none group flex items-center justify-center"
             onClick={() => setIsOpen(!isOpen)}
-            aria-label="Toggle Menu"
+            aria-label={isOpen ? "Close menu" : "Open menu"}
           >
-            <div className="w-6 h-5 flex flex-col justify-between relative">
+            <div className="w-5 h-4 sm:w-6 sm:h-5 flex flex-col justify-between relative">
               <span className={cn(
                 "w-full h-0.5 transition-all duration-300 rounded-full",
                 isAdminDashboard 
@@ -208,26 +208,28 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: "spring", damping: 35, stiffness: 300 }}
-              className="absolute right-0 top-0 bottom-0 w-[85%] max-w-sm bg-pap-light shadow-2xl flex flex-col h-screen overflow-y-auto"
+              role="dialog"
+              aria-label="Mobile navigation menu"
+              className="absolute right-0 top-0 bottom-0 w-[90%] xs:w-[85%] max-w-sm bg-pap-light shadow-2xl flex flex-col h-screen overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close Button */}
-              <button 
+              <button
                 onClick={() => setIsOpen(false)}
-                className="absolute top-4 right-4 w-10 h-10 rounded-xl bg-pap-primary/10 flex items-center justify-center text-pap-primary hover:bg-pap-primary/20 transition-colors z-10"
+                className="absolute top-3 right-3 sm:top-4 sm:right-4 min-w-[44px] min-h-[44px] w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-pap-primary/10 flex items-center justify-center text-pap-primary hover:bg-pap-primary/20 transition-colors z-10"
                 aria-label="Close Menu"
               >
-                <X size={20} />
+                <X size={18} className="sm:w-5 sm:h-5" />
               </button>
               
-              <div className="flex flex-col h-full pt-16">
-                <div className="p-6 flex flex-col gap-6">
+              <div className="flex flex-col h-full pt-14 sm:pt-16">
+                <div className="p-4 sm:p-6 flex flex-col gap-4 sm:gap-6">
                   <div className="space-y-1">
-                    <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-pap-primary/30">Navigation</span>
+                    <span className="text-[8px] sm:text-[10px] uppercase tracking-[0.3em] font-bold text-pap-primary/30">Navigation</span>
                     <div className="h-0.5 w-8 bg-pap-sand" />
                   </div>
                   
-                  <div className="flex flex-col gap-2">
+                  <div className="flex flex-col gap-1 sm:gap-2">
                     {NAV_LINKS.map((link, idx) => (
                       <motion.div
                         key={link.path}
@@ -238,7 +240,7 @@ export default function Navbar() {
                         <Link
                           to={link.path}
                           className={cn(
-                            "text-2xl font-serif font-bold transition-all block py-2 px-4 rounded-lg",
+                            "text-lg sm:text-2xl font-serif font-bold transition-all block py-2 px-3 sm:px-4 rounded-lg",
                             location.pathname === link.path 
                               ? "text-pap-sand bg-pap-primary/10 translate-x-1" 
                               : "text-pap-primary hover:text-pap-sand hover:bg-pap-primary/5 hover:translate-x-1"
@@ -251,7 +253,7 @@ export default function Navbar() {
                   </div>
                 </div>
 
-                <div className="mt-auto p-6 bg-gradient-to-t from-pap-primary/10 to-pap-primary/5 space-y-6">
+                <div className="mt-auto p-4 sm:p-6 bg-gradient-to-t from-pap-primary/10 to-pap-primary/5 space-y-4 sm:space-y-6">
                   {/* Admin Login Toggle - Mobile */}
                   {/* (Edit toggle removed) */}
                   
@@ -263,7 +265,7 @@ export default function Navbar() {
                     >
                       <Link
                         to="/connect"
-                        className="block w-full bg-pap-primary text-white text-center py-4 rounded-xl font-bold text-base shadow-lg active:scale-95 transition-transform hover:bg-pap-primary/90"
+                        className="block w-full bg-pap-primary text-white text-center py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-base shadow-lg active:scale-95 transition-transform hover:bg-pap-primary/90"
                       >
                         Plan Your Visit
                       </Link>
@@ -271,22 +273,22 @@ export default function Navbar() {
                   )}
                   
                   <motion.div 
-                    className="space-y-4 p-4 bg-white/30 rounded-lg backdrop-blur-sm"
+                    className="space-y-3 sm:space-y-4 p-3 sm:p-4 bg-white/30 rounded-lg backdrop-blur-sm"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.6 }}
                   >
                     <div className="flex flex-col gap-1">
-                      <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-pap-primary/40">Our Location</span>
-                      <p className="text-pap-primary text-sm font-medium">123 Apostolic Way, Pentecost City</p>
+                      <span className="text-[7px] sm:text-[10px] uppercase tracking-[0.2em] font-bold text-pap-primary/40">Our Location</span>
+                      <p className="text-pap-primary text-xs sm:text-sm font-medium">123 Apostolic Way, Pentecost City</p>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-pap-primary text-white flex items-center justify-center shadow-md">
-                        <Church className="w-5 h-5" />
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-pap-primary text-white flex items-center justify-center shadow-md flex-shrink-0">
+                        <Church className="w-4 h-4 sm:w-5 sm:h-5" />
                       </div>
                       <div className="flex flex-col">
-                        <span className="text-sm font-bold text-pap-primary">Praise Church</span>
-                        <span className="text-xs text-pap-primary/60">Pentecostals</span>
+                        <span className="text-xs sm:text-sm font-bold text-pap-primary">Praise Church</span>
+                        <span className="text-[10px] sm:text-xs text-pap-primary/60">Pentecostals</span>
                       </div>
                     </div>
                   </motion.div>

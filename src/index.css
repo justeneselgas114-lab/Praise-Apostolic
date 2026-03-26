@@ -1,14 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700&display=swap');
 @import "tailwindcss";
 
-html {
-  scroll-behavior: smooth;
-}
-
 @theme {
   --font-sans: "Montserrat", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Montserrat", serif;
-  
+
+  --breakpoint-xs: 480px;
+
   --color-pap-primary: #0f2c3a;
   --color-pap-secondary: #212c29;
   --color-pap-earth: #75705c;
@@ -21,9 +19,22 @@ html {
   body {
     @apply bg-pap-light text-pap-ink font-sans antialiased;
   }
-  
+
   h1, h2, h3, h4, h5, h6 {
     @apply font-serif;
+  }
+
+  /* Focus-visible ring for keyboard navigation */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-pap-sand;
+  }
+
+  /* Skip-to-content link */
+  .skip-to-content {
+    @apply absolute -top-full left-4 z-[200] bg-pap-sand text-white px-6 py-3 rounded-b-xl font-bold text-sm transition-all;
+  }
+  .skip-to-content:focus {
+    @apply top-0;
   }
   
   /* Smooth scrollbar for admin pages */
@@ -46,7 +57,7 @@ html {
 }
 
 .section-padding {
-  @apply py-20 md:py-32 px-6 md:px-12 max-w-7xl mx-auto;
+  @apply py-12 sm:py-16 md:py-20 lg:py-32 px-4 sm:px-6 md:px-8 lg:px-12 max-w-7xl mx-auto;
 }
 
 .pap-button-primary {
@@ -55,4 +66,29 @@ html {
 
 .pap-button-outline {
   @apply border-2 border-pap-sand text-pap-sand px-8 py-4 rounded-full font-bold transition-all hover:bg-pap-sand hover:text-white;
+}
+
+/* Loading spinner animation */
+@keyframes pap-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.pap-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--color-pap-sand, #bba784);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: pap-spin 0.8s linear infinite;
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

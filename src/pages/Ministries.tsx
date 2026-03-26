@@ -4,8 +4,11 @@ import MinistryCard from '../components/MinistryCard';
 import ParallaxSection from '../components/ParallaxSection';
 import { ministriesAPI } from '../lib/api';
 import { Ministry } from '../lib/types';
+import { usePageMeta } from '../lib/usePageMeta';
 
 export default function Ministries() {
+  usePageMeta('Departments', 'Explore our church ministries and find your place in the Apostolic community.');
+
   const [ministries, setMinistries] = useState<Ministry[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -22,11 +25,7 @@ export default function Ministries() {
   }, []);
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-    >
+    <div>
       <ParallaxSection 
         image="/images/ministries.jpg"
         heightClassName="pt-48 pb-32 px-6"
@@ -43,11 +42,19 @@ export default function Ministries() {
       <section className="section-padding bg-pap-light">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {loading ? (
-            <p className="col-span-3 text-center text-pap-primary/70">Loading ministries…</p>
+            <div className="col-span-full flex flex-col items-center justify-center py-16 gap-4">
+              <div className="pap-spinner" />
+              <p className="text-pap-primary/60 font-light">Loading ministries...</p>
+            </div>
           ) : error ? (
-            <p className="col-span-3 text-center text-red-600">{error}</p>
+            <div className="col-span-full flex flex-col items-center justify-center py-16 gap-4">
+              <p className="text-red-600 font-medium">{error}</p>
+              <button onClick={() => window.location.reload()} className="px-6 py-2 bg-pap-sand text-white rounded-full font-semibold hover:bg-pap-sand/90 transition-all text-sm">
+                Try Again
+              </button>
+            </div>
           ) : ministries.length === 0 ? (
-            <p className="col-span-3 text-center text-pap-primary/70">No ministries found at this time.</p>
+            <p className="col-span-full text-center text-pap-primary/60 py-16 font-light">No ministries found at this time.</p>
           ) : (
             ministries.map((ministry, idx) => (
               <MinistryCard key={ministry.id} ministry={ministry} index={idx} />
@@ -62,16 +69,26 @@ export default function Ministries() {
         heightClassName="py-32 px-6"
         overlayClassName="bg-pap-secondary/90"
       >
-        <div className="max-w-6xl mx-auto p-8 md:p-24 rounded-[4rem] text-center space-y-8 md:space-y-10 relative z-10">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="max-w-6xl mx-auto p-8 md:p-24 rounded-[3rem] text-center space-y-8 md:space-y-10 relative z-10 bg-gradient-to-r from-white/5 to-white/10 border border-white/20 backdrop-blur-sm"
+        >
           <h2 className="text-3xl sm:text-5xl md:text-7xl font-serif font-bold text-white">Ready to Serve?</h2>
-          <p className="text-sm sm:text-base md:text-xl text-white/70 max-w-2xl mx-auto font-light leading-relaxed">
+          <p className="text-sm sm:text-base md:text-xl text-white/80 max-w-2xl mx-auto font-light leading-relaxed">
             God has given each of us unique gifts to build up the body of Christ. We'd love to help you find your place in our volunteer teams.
           </p>
-          <button className="px-8 sm:px-12 py-4 sm:py-5 bg-pap-sand text-white rounded-full font-bold text-sm sm:text-lg md:text-xl hover:bg-pap-sand/90 transition-all shadow-2xl active:scale-95">
+          <motion.button 
+            whileHover={{ scale: 1.08, boxShadow: "0 20px 40px rgba(182, 130, 67, 0.4)" }}
+            whileTap={{ scale: 0.95 }}
+            className="px-8 sm:px-12 py-4 sm:py-5 bg-gradient-to-r from-pap-sand to-pap-sand/80 hover:from-pap-sand/95 hover:to-pap-sand/85 text-white rounded-full font-bold text-sm sm:text-lg md:text-xl transition-all shadow-xl"
+          >
             Join a Serving Team
-          </button>
-        </div>
+          </motion.button>
+        </motion.div>
       </ParallaxSection>
-    </motion.div>
+    </div>
   );
 }

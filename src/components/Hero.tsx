@@ -21,50 +21,52 @@ export default function Hero() {
         style={{ y, scale }}
         className="absolute inset-0 z-0 h-[120%]"
       >
-        <img 
-          src="/images/home.jpg" 
+        <img
+          src="/images/home.jpg"
           alt="Church Worship"
           className="w-full h-full object-cover opacity-40"
           referrerPolicy="no-referrer"
+          loading="eager"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-pap-primary/80 to-transparent" />
       </motion.div>
 
       <motion.div 
         style={{ opacity }}
-        className="relative z-10 text-center px-6 max-w-4xl"
+        className="relative z-10 text-center px-4 sm:px-6 max-w-4xl"
       >
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <span className="inline-block px-4 py-1.5 rounded-full bg-pap-sand/20 text-pap-sand text-xs font-bold uppercase tracking-widest mb-6 border border-pap-sand/30">
+          <span className="inline-block px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-pap-sand/20 text-pap-sand text-[10px] sm:text-xs font-bold uppercase tracking-widest mb-4 sm:mb-6 border border-pap-sand/30">
             Praise Apostolic Pentecostals
           </span>
-          <h1 className="text-4xl sm:text-5xl md:text-8xl text-pap-light font-serif font-bold mb-6 leading-[1.1] tracking-tight">
+          <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-7xl lg:text-8xl text-pap-light font-serif font-bold mb-4 sm:mb-6 leading-[1.1] tracking-tight">
             Reverent. Calm. <br />
             <span className="italic text-pap-sand">Grounded.</span>
           </h1>
-          <p className="text-sm sm:text-base md:text-xl text-pap-light/80 mb-10 max-w-2xl mx-au to font-light leading-relaxed px-4 sm:px-0">
+          <p className="text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl text-pap-light/80 mb-6 sm:mb-10 max-w-2xl mx-auto font-light leading-relaxed px-2 sm:px-0">
             Experience the depth of Apostolic worship and the warmth of a community rooted in heritage and truth.
           </p>
           
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 px-4 sm:px-0">
-            <Link 
+          <div className="flex flex-row items-center justify-center gap-3 sm:gap-4 md:gap-6 px-4 sm:px-0">
+            <Link
               to="/connect"
-              className="w-full sm:w-auto px-8 py-3 sm:py-5 sm:px-10 bg-pap-sand text-white rounded-full font-bold text-base sm:text-lg hover:bg-pap-sand/90 transition-all flex items-center justify-center gap-2 shadow-xl active:scale-95"
+              className="px-5 xs:px-6 sm:px-8 md:px-10 py-2.5 sm:py-3 md:py-4 bg-pap-sand border-2 border-pap-sand text-white rounded-full font-bold text-xs xs:text-sm sm:text-base lg:text-lg hover:bg-pap-sand/90 hover:border-pap-sand/90 transition-all flex items-center justify-center gap-1.5 sm:gap-2 shadow-xl active:scale-95 min-h-[40px] sm:min-h-[48px]"
             >
-              <Calendar size={18} />
+              <Calendar size={14} className="sm:w-[18px] sm:h-[18px]" />
               Plan Your Visit
             </Link>
-            <a 
-              href="https://youtube.com" 
-              target="_blank" 
+            <a
+              href="https://youtube.com"
+              target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto px-8 py-3 sm:py-5 sm:px-10 bg-white/10 backdrop-blur-md border border-white/20 text-white rounded-full font-bold text-base sm:text-lg hover:bg-white/20 transition-all flex items-center justify-center gap-2 shadow-xl active:scale-95"
+              aria-label="Stream live on YouTube"
+              className="px-5 xs:px-6 sm:px-8 md:px-10 py-2.5 sm:py-3 md:py-4 bg-white/10 backdrop-blur-md border-2 border-white/20 text-white rounded-full font-bold text-xs xs:text-sm sm:text-base lg:text-lg hover:bg-white/20 transition-all flex items-center justify-center gap-1.5 sm:gap-2 shadow-xl active:scale-95 min-h-[40px] sm:min-h-[48px]"
             >
-              <Play size={18} fill="currentColor" />
+              <Play size={14} fill="currentColor" className="sm:w-[18px] sm:h-[18px]" />
               Stream Live
             </a>
           </div>

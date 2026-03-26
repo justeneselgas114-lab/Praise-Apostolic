@@ -36,7 +36,7 @@ export default function SermonHighlight() {
   };
 
   return (
-    <section className="bg-pap-primary py-24 md:py-32 px-6 border-y border-white/5">
+    <section className="bg-pap-primary py-16 sm:py-20 md:py-32 px-4 sm:px-6 border-y border-white/5">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-16 gap-6">
           <div className="space-y-3 md:space-y-4">
@@ -65,6 +65,7 @@ export default function SermonHighlight() {
               alt={latest.title}
               className="w-full aspect-video object-cover group-hover:scale-105 transition-transform duration-700 opacity-90"
               referrerPolicy="no-referrer"
+              loading="lazy"
             />
             <div className="absolute inset-0 bg-pap-primary/20 group-hover:bg-pap-primary/10 transition-colors flex items-center justify-center">
               <a
@@ -78,9 +79,8 @@ export default function SermonHighlight() {
               </a>
             </div>
             <div className="absolute top-4 right-4 md:top-8 md:right-8">
-              <span className="bg-pap-sand text-white px-3 py-1 md:px-4 md:py-1.5 rounded-full text-[10px] md:text-xs font-bold flex items-center gap-1.5 md:gap-2 animate-pulse">
-                <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-white rounded-full" />
-                LIVE NOW
+              <span className="bg-pap-sand/80 text-white px-3 py-1 md:px-4 md:py-1.5 rounded-full text-[10px] md:text-xs font-bold">
+                Latest Sermon
               </span>
             </div>
           </motion.div>
@@ -102,8 +102,20 @@ export default function SermonHighlight() {
           </div>
         </div>
 
-        {loading && <p className="mt-8 text-center text-pap-light/70">Loading latest sermon…</p>}
-        {error && <p className="mt-8 text-center text-red-200">{error}</p>}
+        {loading && (
+          <div aria-live="polite" className="mt-8 flex flex-col items-center justify-center py-8 gap-4">
+            <div className="pap-spinner" style={{ borderColor: 'rgba(255,255,255,0.3)', borderTopColor: 'transparent' }} />
+            <p className="text-pap-light/60 font-light">Loading latest sermon...</p>
+          </div>
+        )}
+        {error && (
+          <div className="mt-8 flex flex-col items-center justify-center py-8 gap-4">
+            <p className="text-red-300 font-medium">{error}</p>
+            <button onClick={() => window.location.reload()} className="px-6 py-2 bg-pap-sand text-white rounded-full font-semibold hover:bg-pap-sand/90 transition-all text-sm">
+              Try Again
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

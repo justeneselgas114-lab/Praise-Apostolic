@@ -51,9 +51,6 @@ export default function AdminLogin() {
     }
   };
 
-  // This notice is shown so dev/test users know the default login credentials.
-  const isDev = process.env.NODE_ENV !== 'production';
-
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-12">
       <motion.div
@@ -65,11 +62,6 @@ export default function AdminLogin() {
         <div className="bg-white rounded-2xl shadow-lg p-8">
           <h2 className="text-2xl font-serif font-bold mb-4">Admin Login</h2>
           <p className="text-sm text-gray-600 mb-6">Sign in to manage site content.</p>
-          {isDev && (
-            <div className="mb-4 rounded-lg bg-yellow-50 border border-yellow-200 p-4 text-sm text-yellow-800">
-              Dev credentials (use in local/dev): <strong>admin@pap.local</strong> / <strong>papadmin123</strong>
-            </div>
-          )}
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
