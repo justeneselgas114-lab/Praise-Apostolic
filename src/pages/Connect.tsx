@@ -144,7 +144,7 @@ export default function Connect() {
                 </div>
                 <div>
                   <h4 className="font-bold text-xl md:text-2xl text-pap-primary mb-1 md:mb-2">Location</h4>
-                  <p className="text-pap-primary/50 text-base md:text-lg font-light">123 Apostolic Way, Pentecost City. Ample parking available on the north side.</p>
+                  <p className="text-pap-primary/50 text-base md:text-lg font-light">144 7th St. Countryside Ave, Brgy. Sta Lucia, Pasig, Philippines 1608</p>
                 </div>
               </div>
               <div className="flex gap-6 md:gap-8">

@@ -48,7 +48,7 @@ export default function Home() {
             </div>
             <div className="min-w-0">
               <p className="text-[8px] sm:text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-pap-sand/80 mb-0.5 md:mb-1 leading-tight">Our Location</p>
-              <p className="font-serif text-xs sm:text-sm md:text-base lg:text-lg font-semibold leading-tight">123 Apostolic Way, Pentecost City</p>
+              <p className="font-serif text-xs sm:text-sm md:text-base lg:text-lg font-semibold leading-tight">Brgy. Sta Lucia, Pasig City</p>
             </div>
           </motion.div>
           <div className="flex justify-start md:justify-end">

@@ -38,7 +38,7 @@ export default function Footer() {
           <ul className="space-y-2 sm:space-y-3 md:space-y-4 text-[11px] xs:text-xs sm:text-sm">
             <li className="flex items-start gap-2 sm:gap-3">
               <MapPin size={14} className="shrink-0 text-pap-sand mt-0.5 sm:mt-1" />
-              <span>123 Apostolic Way, Pentecost City, PC 77777</span>
+              <span>144 7th St. Countryside Ave, Brgy. Sta Lucia, Pasig, Philippines 1608</span>
             </li>
             <li className="flex items-center gap-2 sm:gap-3">
               <Phone size={14} className="shrink-0 text-pap-sand" />

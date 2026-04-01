@@ -4,11 +4,11 @@ import { CreateMinistryDto } from './dto/create-ministry.dto';
 import { UpdateMinistryDto } from './dto/update-ministry.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
-@UseGuards(JwtAuthGuard)
 @Controller('ministries')
 export class MinistriesController {
   constructor(private readonly ministriesService: MinistriesService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() createMinistryDto: CreateMinistryDto) {
     return this.ministriesService.create(createMinistryDto);
@@ -24,11 +24,13 @@ export class MinistriesController {
     return this.ministriesService.findOne(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateMinistryDto: UpdateMinistryDto) {
     return this.ministriesService.update(id, updateMinistryDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.ministriesService.remove(id);

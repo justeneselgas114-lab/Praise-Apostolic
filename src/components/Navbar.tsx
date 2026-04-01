@@ -280,7 +280,7 @@ export default function Navbar() {
                   >
                     <div className="flex flex-col gap-1">
                       <span className="text-[7px] sm:text-[10px] uppercase tracking-[0.2em] font-bold text-pap-primary/40">Our Location</span>
-                      <p className="text-pap-primary text-xs sm:text-sm font-medium">123 Apostolic Way, Pentecost City</p>
+                      <p className="text-pap-primary text-xs sm:text-sm font-medium">Brgy. Sta Lucia, Pasig City</p>
                     </div>
                     <div className="flex items-center gap-2 sm:gap-3">
                       <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-pap-primary text-white flex items-center justify-center shadow-md flex-shrink-0">

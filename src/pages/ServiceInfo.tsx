@@ -99,15 +99,22 @@ export default function ServiceInfo() {
               <div className="flex gap-6">
                 <MapPin className="shrink-0 text-pap-sand" size={32} />
                 <p className="text-base sm:text-lg md:text-xl font-light leading-relaxed">
-                  123 Apostolic Way, <br />
-                  Pentecost City, PC 54321
+                  144 7th St. Countryside Ave, <br />
+                  Brgy. Sta Lucia, Pasig, Philippines 1608
                 </p>
               </div>
               <div className="aspect-video rounded-2xl overflow-hidden bg-white/5 border border-white/10">
-                {/* Placeholder for Map */}
-                <div className="w-full h-full flex items-center justify-center text-white/20 italic">
-                  Interactive Map Placeholder
-                </div>
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.2!2d121.074!3d14.568!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c7e4c4a1b1b1%3A0x0!2sBrgy.%20Sta%20Lucia%2C%20Pasig%2C%20Philippines!5e0!3m2!1sen!2sph!4v1700000000000"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Church Location Map"
+                  className="w-full h-full"
+                />
               </div>
             </div>
           </div>

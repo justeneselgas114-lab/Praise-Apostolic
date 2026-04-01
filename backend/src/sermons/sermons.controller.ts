@@ -4,11 +4,11 @@ import { CreateSermonDto } from './dto/create-sermon.dto';
 import { UpdateSermonDto } from './dto/update-sermon.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
-@UseGuards(JwtAuthGuard)
 @Controller('sermons')
 export class SermonsController {
   constructor(private readonly sermonsService: SermonsService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() createSermonDto: CreateSermonDto) {
     return this.sermonsService.create(createSermonDto);
@@ -24,11 +24,13 @@ export class SermonsController {
     return this.sermonsService.findOne(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateSermonDto: UpdateSermonDto) {
     return this.sermonsService.update(id, updateSermonDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.sermonsService.remove(id);
